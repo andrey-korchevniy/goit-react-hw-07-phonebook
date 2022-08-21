@@ -1,43 +1,42 @@
-import { FilterForm, FilterField, InputBlock, FilterBtn, ClearFilterBtn } from "./FilterBar.styled";
+import {
+  FilterForm,
+  FilterField,
+  InputBlock,
+  FilterBtn,
+  ClearFilterBtn,
+} from './FilterBar.styled';
 import { Formik } from 'formik';
-import { SvgSearch, SvgClear } from "images/Svg";
-import { useSelector, useDispatch } from "react-redux";
-import { setFilter } from "redux/contacts";
-import { getFilter } from "redux/contacts";
+import { SvgSearch, SvgClear } from 'images/Svg';
+import PropTypes from 'prop-types';
 
-export const FilterBar = () => {
+export const FilterBar = ({ value, onSubmit, onClear }) => {
+  return (
+    <InputBlock>
+      <Formik initialValues={value}>
+        <FilterForm>
+          <FilterBtn>
+            <SvgSearch />
+          </FilterBtn>
+          <FilterField
+            type="text"
+            name="filter"
+            placeholder="Search contacts"
+            onChange={onSubmit}
+            required
+            value={value}
+            autoComplete="off"
+          />
+          <ClearFilterBtn type="clear" onClick={onClear}>
+            <SvgClear />
+          </ClearFilterBtn>
+        </FilterForm>
+      </Formik>
+    </InputBlock>
+  );
+};
 
-    const dispatch = useDispatch()
-    const filterValue = useSelector(getFilter);
-
-    const handleOnChange = (e) => {
-        dispatch(setFilter(e.currentTarget.value))
-    }
-
-    const handleClearClick = () => {
-        dispatch(setFilter(''))
-    }
-
-    return (
-        <InputBlock>
-            <Formik
-                initialValues={{ filter: `${filterValue}` }}
-            >
-                <FilterForm>
-                    <FilterBtn><SvgSearch /></FilterBtn>
-                    <FilterField
-                        type="text"
-                        name="filter"
-                        placeholder="Search contacts"
-                        onChange={handleOnChange}
-                        required
-                        value={filterValue}
-                        autoComplete="off"
-                    />
-                    <ClearFilterBtn type="clear" onClick={handleClearClick}><SvgClear /></ClearFilterBtn>
-                </FilterForm>
-            </Formik>
-        </InputBlock>
-        
-    )
-}
+FilterBar.propTypes = {
+  value: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onClear: PropTypes.func.isRequired,
+};

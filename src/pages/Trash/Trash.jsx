@@ -1,17 +1,11 @@
-import React from "react";
-import { ContactsTable } from "components/ContactsTable/ContactsTable";
-import { getTrashList } from "redux/contacts";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { ContactsTable } from 'components/ContactsTable/ContactsTable';
+import PropTypes from 'prop-types';
 
-export const Trash = () => {
-    const contactForRender = useSelector(getTrashList); // get contacts list for trash
-   
-    if (contactForRender.length > 0) {
-        return (
-            <ContactsTable contactForRender={contactForRender}/>
-        )
-    } 
-    else return (
-        <h3> You don`t have any deleted contacts </h3>
-    )
-}
+export const Trash = ({ filter }) => {
+  return <ContactsTable trash={true} filter={filter} />;
+};
+
+Trash.propTypes = {
+  filter: PropTypes.string.isRequired,
+};
