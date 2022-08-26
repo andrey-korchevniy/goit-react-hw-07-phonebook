@@ -2,10 +2,9 @@ import { SvgName, SvgTel } from 'images/Svg';
 import { Label, InputField, ErrorInput } from './ContactInputLine.styled';
 import PropTypes from 'prop-types';
 import { PhoneInputField } from './PhoneInputField/PhoneInputField';
-import 'react-phone-input-2/lib/style.css';
 import React from 'react';
 
-// line 'Nane' or 'Phone' - depends of props
+// line 'Name' or 'Phone' - depends of props
 export const ContactInputLine = ({ type, name, title, placeholder }) => {
   const component = name === 'phone' ? PhoneInputField : null;
 
