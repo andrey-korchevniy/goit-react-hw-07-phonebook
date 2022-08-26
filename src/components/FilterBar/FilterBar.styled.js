@@ -1,18 +1,13 @@
 import styled from "styled-components";
 import { Form, Field } from 'formik';
 
-export const InputBlock = styled.div`
+export const FilterForm = styled(Form)`
     max-width: 725px;
     width: 100%;
-    height: 64px;
-    display: block;
-`
-export const FilterForm = styled(Form)`
     position: relative;
     display: flex;
     height: 48px;
-    margin-top: 8px;
-    display: block;
+    margin-top: 10px;
 `
 export const FilterField = styled(Field)`
     margin-left: 0px;

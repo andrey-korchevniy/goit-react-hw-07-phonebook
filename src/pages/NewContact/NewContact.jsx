@@ -14,7 +14,7 @@ const NewContact = () => {
   const { data } = useGetMockApiQuery({ refetshOnFocus: true });
   const [createContact] = useCreateContactMutation();
 
-  const hundleSubmit = (e, { resetForm }) => {
+  const hundleSubmit = e => {
     const { name, phone } = e;
 
     // check if there are any such contacts

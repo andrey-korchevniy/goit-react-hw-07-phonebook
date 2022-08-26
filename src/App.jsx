@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
-import { Spinner } from 'components/Spinner/Spinner';
+import { Spinner } from 'components/UI/Spinner/Spinner';
 
 const Layout = lazy(() => import('./layout/Layout'));
 const Contacts = lazy(() => import('./pages/Contacts'));

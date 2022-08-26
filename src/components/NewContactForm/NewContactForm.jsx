@@ -1,8 +1,9 @@
 import { Formik, Form } from 'formik';
-import { ContactInputLine } from 'components/ContactInputLine/ContactInputLine';
+import { ContactInputLine } from './ContactInputLine/ContactInputLine';
 import { Button } from 'pages/NewContact/NewContact.styled';
 import * as yup from 'yup';
 import 'react-phone-input-2/lib/style.css';
+import PropTypes from 'prop-types';
 
 const validationSchema = yup.object().shape({
   name: yup.string().min(3).required(),
@@ -33,4 +34,8 @@ export const NewContactForm = ({ hundleSubmit }) => {
       </Form>
     </Formik>
   );
+};
+
+NewContactForm.propTypes = {
+  hundleSubmit: PropTypes.func.isRequired,
 };

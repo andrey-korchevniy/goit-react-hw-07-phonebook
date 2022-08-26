@@ -1,6 +1,6 @@
 import { MenuItems, Menu, P, StyledLink, Item } from './NavMenu.styled';
-import { Logo } from 'components/Logo/Logo';
-import { AddNewContactButton } from 'components/AddNewContactButton/AddNewContactButton';
+import { Logo } from 'components/UI/Logo/Logo';
+import { AddNewContactButton } from 'components/UI/AddNewContactButton/AddNewContactButton';
 import { SvgContact, SvgTrash } from 'images/Svg';
 import { useGetMockApiQuery } from 'redux/mockApiSlice';
 
