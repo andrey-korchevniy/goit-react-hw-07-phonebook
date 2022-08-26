@@ -1,37 +1,22 @@
 import { Routes, Route } from 'react-router-dom';
-import { Layout } from 'layout/Layout';
-import { Contacts } from 'pages/Contacts';
-import { NewContact } from 'pages/NewContact/NewContact';
-import { Trash } from 'pages/Trash/Trash';
-import { useState } from 'react';
+import { lazy, Suspense } from 'react';
+import { Spinner } from 'components/Spinner/Spinner';
+
+const Layout = lazy(() => import('./layout/Layout'));
+const Contacts = lazy(() => import('./pages/Contacts'));
+const Trash = lazy(() => import('./pages/Trash/Trash'));
+const NewContact = lazy(() => import('./pages/NewContact/NewContact'));
 
 export const App = () => {
-  const [filter, setFilter] = useState('');
-
-  const hundleFilterCahge = value => {
-    setFilter(value.currentTarget.value);
-  };
-
-  const handleClearClick = () => {
-    setFilter('');
-  };
-
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Layout
-            filter={filter}
-            onChange={hundleFilterCahge}
-            onClear={handleClearClick}
-          />
-        }
-      >
-        <Route index element={<Contacts filter={filter} />} />
-        <Route path="trash" element={<Trash filter={filter} />} />
-        <Route path="newcontact" element={<NewContact />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<Spinner />}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Contacts />} />
+          <Route path="trash" element={<Trash />} />
+          <Route path="newcontact" element={<NewContact />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 };

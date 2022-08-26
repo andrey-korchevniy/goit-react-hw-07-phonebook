@@ -12,18 +12,29 @@ import {
   useDeleteContactMutation,
   useToTrashContactMutation,
 } from 'redux/mockApiSlice';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+Notify.init({ position: 'center-top' });
 
 export const ContactRow = ({ id, name, number, isDeleted }) => {
   // processing deleting forever
-  const [deleteContact, { isLoading: isUpdating }] =
-    useDeleteContactMutation(id);
+  const [deleteContact] = useDeleteContactMutation(id);
+
+  const hundleDeleteContact = () => {
+    deleteContact(id);
+    Notify.success('Yor contact has been deleted forever');
+  };
 
   // delete to trash
   const [toTrashContact] = useToTrashContactMutation();
 
   const hundleDeleteBtnClick = () => {
+    const message = isDeleted
+      ? 'Your contact has been restored'
+      : 'Your contact has been moved to Trash';
     isDeleted = !isDeleted;
     toTrashContact({ id, isDeleted });
+    Notify.success(message);
   };
 
   return (
@@ -31,14 +42,11 @@ export const ContactRow = ({ id, name, number, isDeleted }) => {
       <Cell>{name}</Cell>
       <CellAmount>{number}</CellAmount>
       <CellAction>
-        <DeleteBtn onClick={hundleDeleteBtnClick} isLoading={isUpdating}>
+        <DeleteBtn onClick={hundleDeleteBtnClick}>
           <SvgClear />
         </DeleteBtn>
         {isDeleted ? (
-          <DeleteForeverBtn
-            onClick={() => deleteContact(id)}
-            isLoading={isUpdating}
-          >
+          <DeleteForeverBtn onClick={hundleDeleteContact}>
             Delete forever
           </DeleteForeverBtn>
         ) : (

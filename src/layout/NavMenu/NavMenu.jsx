@@ -12,7 +12,7 @@ export const NavMenu = () => {
 
   return (
     <Menu>
-      <Logo />
+      <Logo to="/" />
       <AddNewContactButton />
       <MenuItems>
         <li>

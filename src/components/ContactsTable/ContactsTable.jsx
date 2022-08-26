@@ -4,7 +4,7 @@ import { useGetMockApiQuery } from 'redux/mockApiSlice';
 import PropTypes from 'prop-types';
 
 export const ContactsTable = ({ trash, filter }) => {
-  const { data, isSuccess } = useGetMockApiQuery();
+  const { data, isSuccess } = useGetMockApiQuery('', { refetshOnFocus: true });
 
   // makes a list for render if request is success
   if (isSuccess) {

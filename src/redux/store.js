@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { mockApi } from './mockApiSlice';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
 export const store = configureStore({
     reducer: {
@@ -8,3 +9,5 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(mockApi.middleware),
 }) 
+
+setupListeners(store.dispatch);

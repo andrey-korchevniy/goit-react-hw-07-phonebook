@@ -12,7 +12,7 @@ export const Label = styled.label`
     color: #5f6368;
     fill: #5f6368;
 
-    :focus, :active. :hover {
+    :focus, :active, :hover {
         fill: blue;
     }
 `

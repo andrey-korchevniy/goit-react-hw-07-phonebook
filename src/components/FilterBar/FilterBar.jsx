@@ -38,5 +38,5 @@ export const FilterBar = ({ value, onSubmit, onClear }) => {
 FilterBar.propTypes = {
   value: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onClear: PropTypes.func.isRequired,
+  // onClear: PropTypes.func.isRequired,
 };

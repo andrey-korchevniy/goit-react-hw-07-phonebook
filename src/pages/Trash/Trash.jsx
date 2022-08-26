@@ -1,11 +1,29 @@
 import React from 'react';
 import { ContactsTable } from 'components/ContactsTable/ContactsTable';
-import PropTypes from 'prop-types';
+import { FilterBar } from 'components/FilterBar/FilterBar';
+import { useState } from 'react';
 
-export const Trash = ({ filter }) => {
-  return <ContactsTable trash={true} filter={filter} />;
+const Trash = () => {
+  const [filter, setFilter] = useState('');
+
+  const hundleFilterCahge = value => {
+    setFilter(value.currentTarget.value);
+  };
+
+  const handleClearClick = () => {
+    setFilter('');
+  };
+
+  return (
+    <>
+      <FilterBar
+        value={filter}
+        onSubmit={hundleFilterCahge}
+        onClear={handleClearClick}
+      />
+      <ContactsTable trash={true} filter={filter} />
+    </>
+  );
 };
 
-Trash.propTypes = {
-  filter: PropTypes.string.isRequired,
-};
+export default Trash;
