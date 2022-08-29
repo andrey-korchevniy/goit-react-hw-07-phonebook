@@ -2,18 +2,30 @@ import { Table, HeadRow, HeadCell } from './ContactsTable.styled';
 import { ContactRow } from './ContactRow/ContactRow';
 import { useGetMockApiQuery } from 'redux/mockApiSlice';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-export const ContactsTable = ({ trash, filter }) => {
-  const { data, isSuccess } = useGetMockApiQuery('', { refetshOnFocus: true });
+export const ContactsTable = ({ trash }) => {
+  let contactsForRender = [];
+  const { data, isSuccess, isError } = useGetMockApiQuery('', {
+    refetchOnFocus: true,
+  });
+
+  const { contactsFilter, trashFilter } = useSelector(state => state.filter);
+  const filter = trash ? trashFilter : contactsFilter;
 
   // makes a list for render if request is success
   if (isSuccess) {
-    const contactForRender = data.filter(
-      ({ name, phone, isDeleted }) =>
-        isDeleted === trash && (name.includes(filter) || phone.includes(filter))
-    );
+    contactsForRender = data
+      .filter(
+        ({ name, phone, isDeleted }) =>
+          isDeleted === trash &&
+          (name.includes(filter) || phone.includes(filter))
+      )
+      .reverse();
+  }
 
-    return (
+  return (
+    <>
       <Table>
         <HeadRow>
           <tr>
@@ -23,22 +35,24 @@ export const ContactsTable = ({ trash, filter }) => {
           </tr>
         </HeadRow>
         <tbody>
-          {contactForRender.map(contact => (
+          {contactsForRender.map(({ id, name, phone, isDeleted }) => (
             <ContactRow
-              key={contact.id}
-              id={contact.id}
-              name={contact.name}
-              number={contact.phone}
-              isDeleted={contact.isDeleted}
+              key={id}
+              id={id}
+              name={name}
+              number={phone}
+              isDeleted={isDeleted}
             />
           ))}
         </tbody>
       </Table>
-    );
-  }
+      {isError && (
+        <h2>An error appeared to be on our side... We're so sorry :(</h2>
+      )}
+    </>
+  );
 };
 
 ContactsTable.propTypes = {
   trash: PropTypes.bool.isRequired,
-  filter: PropTypes.string.isRequired,
 };

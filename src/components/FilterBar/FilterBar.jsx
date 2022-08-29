@@ -1,39 +1,54 @@
+import { useDispatch, useSelector } from 'react-redux';
 import {
   FilterForm,
   FilterField,
-  FilterBtn,
+  FilterIcon,
   ClearFilterBtn,
 } from './FilterBar.styled';
 import { Formik } from 'formik';
-import { SvgSearch, SvgClear } from 'images/Svg';
-import PropTypes from 'prop-types';
+import { SvgSearch, SvgDelete } from 'images/Svg';
+import {
+  setTrashFilter,
+  clearFilter,
+  setContactsFilter,
+} from 'redux/filterSlice';
 
-export const FilterBar = ({ value, onSubmit, onClear }) => {
+export const FilterBar = ({ trash }) => {
+  const { contactsFilter, trashFilter } = useSelector(state => state.filter);
+  const filter = trash ? trashFilter : contactsFilter;
+  console.log(trash, 'trash', trashFilter, 'conta', contactsFilter);
+
+  const dispatch = useDispatch();
+
+  const onSubmit = data => {
+    trash
+      ? dispatch(setTrashFilter(data.currentTarget.value))
+      : dispatch(setContactsFilter(data.currentTarget.value));
+  };
+
+  const onClear = () => {
+    dispatch(clearFilter());
+  };
+
   return (
-    <Formik initialValues={value}>
+    <Formik initialValues={''}>
       <FilterForm>
-        <FilterBtn>
+        <FilterIcon>
           <SvgSearch />
-        </FilterBtn>
+        </FilterIcon>
         <FilterField
           type="text"
           name="filter"
           placeholder="Search contacts"
           onChange={onSubmit}
           required
-          value={value}
+          value={filter}
           autoComplete="off"
         />
         <ClearFilterBtn type="clear" onClick={onClear}>
-          <SvgClear />
+          <SvgDelete />
         </ClearFilterBtn>
       </FilterForm>
     </Formik>
   );
-};
-
-FilterBar.propTypes = {
-  value: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onClear: PropTypes.func.isRequired,
 };

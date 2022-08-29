@@ -7,7 +7,7 @@ import {
   CellAction,
 } from './ContactRow.styled';
 import PropTypes from 'prop-types';
-import { SvgClear } from 'images/Svg';
+import { SvgDelete, SvgRecovery } from 'images/Svg';
 import {
   useDeleteContactMutation,
   useToTrashContactMutation,
@@ -20,15 +20,16 @@ export const ContactRow = ({ id, name, number, isDeleted }) => {
   // processing deleting forever
   const [deleteContact] = useDeleteContactMutation(id);
 
-  const hundleDeleteContact = () => {
+  const handleDeleteContact = () => {
     deleteContact(id);
     Notify.success('Yor contact has been deleted forever');
   };
 
   // delete to trash
-  const [toTrashContact] = useToTrashContactMutation();
+  const [toTrashContact, { isLoading, isSuccess }] =
+    useToTrashContactMutation();
 
-  const hundleDeleteBtnClick = () => {
+  const handleDeleteBtnClick = () => {
     const message = isDeleted
       ? 'Your contact has been restored'
       : 'Your contact has been moved to Trash';
@@ -42,11 +43,14 @@ export const ContactRow = ({ id, name, number, isDeleted }) => {
       <Cell>{name}</Cell>
       <CellAmount>{number}</CellAmount>
       <CellAction>
-        <DeleteBtn onClick={hundleDeleteBtnClick}>
-          <SvgClear />
+        <DeleteBtn
+          onClick={handleDeleteBtnClick}
+          disabled={isLoading || isSuccess}
+        >
+          {isDeleted ? <SvgRecovery /> : <SvgDelete />}
         </DeleteBtn>
         {isDeleted ? (
-          <DeleteForeverBtn onClick={hundleDeleteContact}>
+          <DeleteForeverBtn onClick={handleDeleteContact}>
             Delete forever
           </DeleteForeverBtn>
         ) : (

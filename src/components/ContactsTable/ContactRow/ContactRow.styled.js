@@ -24,6 +24,7 @@ export const DeleteBtn = styled.button`
     border: 0;
     background-color: transparent;
     border-radius: 50%;
+    cursor: pointer;
 
     :focus, :hover {
         background-color: rgba(60,64,67,.1);
@@ -35,11 +36,12 @@ export const DeleteForeverBtn = styled.button`
     height: 36px;
     border: 0;
     background-color: transparent;
-    color: blue;
+    color: gray;
     font-weight: 600;
     border-radius: 5px;
     outline: none !important;
     margin-top: 7px;
+    cursor: pointer;
 
     :hover, :focus, :active {
         background-color: lightgray;
